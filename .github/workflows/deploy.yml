@@ -1,0 +1,30 @@
+name: Deploy Best Model
+
+on:
+  push:
+    paths:
+      - 'best_model.pth'   # Trigger when model is updated
+  workflow_dispatch:      # Allow manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Save Model Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: trained-model
+        path: best_model.pth 
