@@ -1,0 +1,13 @@
+# DVC tracked outputs
+/data/
+/best_model.pth
+
+# Experiment logs
+/mlruns/
+/wandb/
+
+# Python cache
+__pycache__/
+*.pyc
+
+

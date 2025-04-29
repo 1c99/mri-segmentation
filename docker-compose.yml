@@ -1,0 +1,21 @@
+services:
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.11.1
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./mlruns:/mlruns
+    command: mlflow server --host 0.0.0.0 --backend-store-uri file:///mlruns
+    environment:
+      - MLFLOW_TRACKING_URI=file:///mlruns
+    networks:
+      - mlflow-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  mlflow-net:
+    driver: bridge
